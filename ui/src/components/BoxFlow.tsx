@@ -76,12 +76,12 @@ export default function BoxFlow({
     [setEdges]
   );
 
-  const createNewNode = (name: string) => {
+  const createNewNode = (name: string, methods: string[]) => {
     const newNode: NodesType = {
       id: n_id.toString(),
       type: "umlNode",
       position: { x: 50 * (n_id - 2), y: 50 },
-      data: { label: "hola", name: name, methods: [""] },
+      data: { label: "hola", name: name, methods: methods },
     };
     setId((id) => id + 1);
     setNodes((nodes) => [...nodes, newNode]);
