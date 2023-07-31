@@ -14,6 +14,10 @@ export default function App() {
   const [nodesList, setNodesList] = useState<NodesType[]>([]);
 
   const createPost = () => {
+    if (nodesList.length === 0) {
+      console.log("no hay nodos")
+      return;
+    }
     let data = nodesList.map((node) => {
       return {
         className: node.data.name ? node.data.name : "hola",

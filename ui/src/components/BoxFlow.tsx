@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect, useState } from "react";
+import { useCallback, useMemo, useEffect, useState, useRef, Ref } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -9,10 +9,13 @@ import ReactFlow, {
   Controls,
   DefaultEdgeOptions,
   MarkerType,
+  NodeMouseHandler,
+  Node,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { Edge, Connection } from "@reactflow/core";
 import NodeUml from "./node_uml";
+import ContextMenu from "./ContextMenu";
 
 interface BoxFlowProps {
   name: string;
@@ -27,6 +30,15 @@ export interface NodesType {
   position: { x: number; y: number };
   data: { label: string; name?: string; methods?: string[] };
 }
+
+interface MenuProps {
+  id: string;
+  top: number|boolean;
+  left: number|boolean;
+  right: number|boolean;
+  bottom: number|boolean;
+}
+
 const initialEdges = [
   { id: "e1-2", source: "1", target: "2", type: "smoothstep" },
 ];
@@ -71,6 +83,8 @@ export default function BoxFlow({
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [n_id, setId] = useState(3);
+  const [menu, setMenu] = useState<MenuProps|null>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -89,29 +103,55 @@ export default function BoxFlow({
     setNodesList([...nodeList, newNode]);
   };
 
+  const onNodeContextMenu: NodeMouseHandler = useCallback(
+    (event: React.MouseEvent<Element, MouseEvent>, node: Node<any, string|undefined>) => {
+      // Prevent native context menu from showing
+      event.preventDefault();
+
+      // Calculate position of the context menu. We want to make sure it
+      // doesn't get positioned off-screen.
+      const pane = ref.current?.getBoundingClientRect();
+      if (pane !== undefined){
+        setMenu({
+          id: node.id,
+          top: event.clientY < pane.height - 200 && event.clientY,
+          left: event.clientX < pane.width - 200 && event.clientX,
+          right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
+          bottom: event.clientY >= pane.height - 200 && pane.height - event.clientY,
+        });
+      }
+    },
+    [setMenu]
+  );
+  const onPaneClick = useCallback(() => setMenu(null), [setMenu]);
+
   useEffect(() => {
     setter(createNewNode);
   }, [nodes]);
 
   useEffect(() => {
-    setNodesList(initialNodes);
-  }, []);
+    setNodesList(nodes);
+  }, [nodes]);
 
   return (
     <>
       <ReactFlow
+        ref={ref}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onPaneClick={onPaneClick}
+        onNodeContextMenu={onNodeContextMenu}
         defaultEdgeOptions={defaultEdgeOptions}
         fitView
       >
         <Background variant={dotsvariant} gap={12} size={1} />
         <MiniMap position={"top-right"} />
         <Controls position={"top-left"} />
+        {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
       </ReactFlow>
     </>
   );
