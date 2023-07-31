@@ -15,7 +15,7 @@ export default function App() {
 
   const createPost = () => {
     if (nodesList.length === 0) {
-      console.log("no hay nodos")
+      console.log("no hay nodos");
       return;
     }
     let data = nodesList.map((node) => {
@@ -41,7 +41,11 @@ export default function App() {
       <Button onClick={() => createPost()}>Create Scala Code</Button>
       <FormCreateNode createFunction={createNewNode} />
       {post != "" ? (
-        <a href={post} download={"output.zip"} className="border ml-3 text-xl border-blue-500 rounded p-2">
+        <a
+          href={post}
+          download={"output.zip"}
+          className="border ml-3 text-xl border-blue-500 rounded p-2"
+        >
           Descarga aquí
         </a>
       ) : (

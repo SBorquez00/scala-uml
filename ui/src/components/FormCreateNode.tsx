@@ -21,12 +21,11 @@ export default function FormCreateNode(props: FormCreateNodeProps) {
   const { control, register, handleSubmit, reset } = useForm<UseFormInputs>({
     defaultValues: { name: "", inputs: [{ name: "test" }] },
   });
-  const { fields, append /* prepend, remove, swap, move, insert */ } = useFieldArray(
-    {
+  const { fields, append /* prepend, remove, swap, move, insert */ } =
+    useFieldArray({
       control,
       name: "inputs",
-    }
-  );
+    });
   const onSubmit = (data: UseFormInputs) =>
     submitHandler(
       data.name,

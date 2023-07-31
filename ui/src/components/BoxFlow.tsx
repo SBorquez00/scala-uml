@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect, useState, useRef, Ref } from "react";
+import { useCallback, useMemo, useEffect, useState, useRef } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -33,10 +33,10 @@ export interface NodesType {
 
 interface MenuProps {
   id: string;
-  top: number|boolean;
-  left: number|boolean;
-  right: number|boolean;
-  bottom: number|boolean;
+  top: number | boolean;
+  left: number | boolean;
+  right: number | boolean;
+  bottom: number | boolean;
 }
 
 const initialEdges = [
@@ -83,7 +83,7 @@ export default function BoxFlow({
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [n_id, setId] = useState(3);
-  const [menu, setMenu] = useState<MenuProps|null>(null);
+  const [menu, setMenu] = useState<MenuProps | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const onConnect = useCallback(
@@ -104,20 +104,25 @@ export default function BoxFlow({
   };
 
   const onNodeContextMenu: NodeMouseHandler = useCallback(
-    (event: React.MouseEvent<Element, MouseEvent>, node: Node<any, string|undefined>) => {
+    (
+      event: React.MouseEvent<Element, MouseEvent>,
+      node: Node<any, string | undefined>
+    ) => {
       // Prevent native context menu from showing
       event.preventDefault();
 
       // Calculate position of the context menu. We want to make sure it
       // doesn't get positioned off-screen.
       const pane = ref.current?.getBoundingClientRect();
-      if (pane !== undefined){
+      if (pane !== undefined) {
         setMenu({
           id: node.id,
           top: event.clientY < pane.height - 200 && event.clientY,
           left: event.clientX < pane.width - 200 && event.clientX,
-          right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
-          bottom: event.clientY >= pane.height - 200 && pane.height - event.clientY,
+          right:
+            event.clientX >= pane.width - 200 && pane.width - event.clientX,
+          bottom:
+            event.clientY >= pane.height - 200 && pane.height - event.clientY,
         });
       }
     },
