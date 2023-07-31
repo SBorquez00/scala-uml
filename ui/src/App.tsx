@@ -35,8 +35,8 @@ export default function App() {
 
   return (
     <div className="w-100 h-100">
-      <h1 className="text-3xl text-red-500 text-center font-bold underline">
-        Hello world!
+      <h1 className="text-3xl text-cyan-950 text-center font-bold underline">
+        UML to Scala converter
       </h1>
       <Button onClick={() => createPost()}>Create Scala Code</Button>
       <FormCreateNode createFunction={createNewNode} />
