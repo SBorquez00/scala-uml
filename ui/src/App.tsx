@@ -20,7 +20,6 @@ export default function App() {
         methods: node.data.methods,
       };
     });
-    console.log(data);
     axios.post(baseURL, data, { responseType: "blob" }).then((response) => {
       setPost(window.URL.createObjectURL(new Blob([response.data])));
     });
@@ -35,10 +34,10 @@ export default function App() {
       <h1 className="text-3xl text-red-500 text-center font-bold underline">
         Hello world!
       </h1>
-      <Button onClick={() => createPost()}>Create Post</Button>
+      <Button onClick={() => createPost()}>Create Scala Code</Button>
       <FormCreateNode createFunction={createNewNode} />
       {post != "" ? (
-        <a href={post} download={"file.zip"}>
+        <a href={post} download={"output.zip"} className="border ml-3 text-xl border-blue-500 rounded p-2">
           Descarga aquí
         </a>
       ) : (

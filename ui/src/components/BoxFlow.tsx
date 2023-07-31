@@ -52,8 +52,9 @@ export default function BoxFlow({
     () => [
       {
         id: "1",
+        type: "umlNode",
         position: { x: 0, y: 0 },
-        data: { label: "Hola" },
+        data: { label: "Hola", name: "Entidad", methods: ["get_species()"] },
       },
       {
         id: "2",

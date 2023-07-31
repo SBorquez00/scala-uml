@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import { Dialog } from "@headlessui/react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -17,11 +17,11 @@ interface UseFormInputs {
 }
 
 export default function FormCreateNode(props: FormCreateNodeProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { control, register, handleSubmit, reset } = useForm<UseFormInputs>({
     defaultValues: { name: "", inputs: [{ name: "test" }] },
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  const { fields, append /* prepend, remove, swap, move, insert */ } = useFieldArray(
     {
       control,
       name: "inputs",
