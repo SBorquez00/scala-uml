@@ -40,12 +40,12 @@ interface MenuProps {
 }
 
 const initialEdges = [
-  { id: "e1-2", source: "1", target: "2", type: "smoothstep" },
+  { id: "e1-2", source: "2", target: "1", type: "smoothstep" },
 ];
 const defaultEdgeOptions: DefaultEdgeOptions = {
   style: { strokeWidth: 1, stroke: "#000000" },
   markerEnd: {
-    type: MarkerType.ArrowClosed,
+    type: MarkerType.Arrow,
     color: "#000000",
   },
   type: "smoothstep",

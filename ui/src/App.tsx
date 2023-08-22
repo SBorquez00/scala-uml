@@ -5,7 +5,7 @@ import FormCreateNode from "./components/FormCreateNode";
 import Button from "./components/Button";
 
 const className = "Persona";
-const methods = ["get_nombre()", "get_apellido()", "get_numero_de_cuenta()"];
+const methods = ["get_species()", "get_nombre()", "get_apellido()", "get_numero_de_cuenta()"];
 
 export default function App() {
   const [post, setPost] = useState("");

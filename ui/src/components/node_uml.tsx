@@ -9,8 +9,8 @@ interface NodeUmlProps {
 function NodeUml({ data }: NodeProps<NodeUmlProps>) {
   return (
     <>
-      <Handle type="target" position={Position.Top} />
-      <div className="border-solid rounded-none border border-gray-500	font-serif text-xs">
+      <Handle type="source" position={Position.Top} />
+      <div className="border-solid rounded-none border border-gray-500 bg-white	font-serif text-xs">
         <div className="border-solid rounded-none border-b border-gray-500 p-1 text-center">
           {data.name? data.name : "Class"}
         </div>
@@ -20,7 +20,7 @@ function NodeUml({ data }: NodeProps<NodeUmlProps>) {
           ))}
         </div>
       </div>
-      <Handle type="source" position={Position.Bottom} />
+      <Handle type="target" position={Position.Bottom} />
     </>
   );
 }
