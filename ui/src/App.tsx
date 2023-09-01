@@ -9,7 +9,7 @@ const methods = ["get_species()", "get_nombre()", "get_apellido()", "get_numero_
 
 export default function App() {
   const [post, setPost] = useState("");
-  const baseURL = "http://localhost:8000/uml";
+  const baseURL = "http://localhost:8080/uml";
   const [createNewNode, setCreateNewNode] = useState<Function>(() => () => {});
   const [nodesList, setNodesList] = useState<NodesType[]>([]);
 
@@ -24,8 +24,9 @@ export default function App() {
         methods: node.data.methods,
       };
     });
-    axios.post(baseURL, data, { responseType: "blob" }).then((response) => {
-      setPost(window.URL.createObjectURL(new Blob([response.data])));
+    axios.post(baseURL, data).then((response) => {
+      console.log(response.data);
+      //setPost(window.URL.createObjectURL(new Blob([response.data])));
     });
   };
   //write a function that receive a function and set the state
