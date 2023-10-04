@@ -11,7 +11,6 @@ object Main extends cask.MainRoutes {
   private val headers = Seq("Access-Control-Allow-Origin" -> "*",
     "Access-Control-Allow-Headers" -> "Origin, X-Requested-With, Content-Type, Accept",
     "Access-Control-Allow-Methods" -> "GET, POST, PUT, DELETE")
-  )
 
   // Define a function to convert an InputStream to a String
   def inputStreamToString(inputStream: InputStream): String = {

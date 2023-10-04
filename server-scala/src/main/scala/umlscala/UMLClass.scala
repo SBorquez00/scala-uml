@@ -7,8 +7,8 @@ class UMLClass(val name: String, val methods: List[String]) {
   }
 
   def makeClass(): String = {
-      val header = s"class ${name}() {\n"
-      val methodsStruct: List[String] = methods.map(method => s"\ndef ${method} = {\n???\n}")
-      header + methodsStruct.mkString
+      val header = s"class ${name}() {"
+      val methodsStruct: List[String] = methods.map(method => s"\n  def ${method} = {\n    ???\n  }")
+      header + methodsStruct.mkString + "\n}"
   }
 }
