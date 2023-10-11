@@ -3,6 +3,7 @@ import { useReactFlow } from "reactflow";
 
 interface ContextMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   id: string;
+  type: string;
   top?: number | boolean;
   left?: number | boolean;
   right?: number | boolean;
@@ -11,6 +12,7 @@ interface ContextMenuProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function ContextMenu({
   id,
+  type,
   top,
   left,
   right,
@@ -35,7 +37,8 @@ export default function ContextMenu({
       {...props}
     >
       <p style={{ margin: "0.5em" }} className="text-xl">
-        <small>node: {id}</small>
+        <small>node: {id}</small><br></br>
+        <small>tipo: {type}</small>
       </p>
       <button
         onClick={deleteNode}

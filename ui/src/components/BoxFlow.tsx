@@ -28,11 +28,12 @@ export interface NodesType {
   id: string;
   type?: string;
   position: { x: number; y: number };
-  data: { label: string; name?: string; methods?: string[] };
+  data: { label: string; name?: string; methods?: string[]; classType: string };
 }
 
 interface MenuProps {
   id: string;
+  type: string;
   top: number | boolean;
   left: number | boolean;
   right: number | boolean;
@@ -66,13 +67,23 @@ export default function BoxFlow({
         id: "1",
         type: "umlNode",
         position: { x: 0, y: 0 },
-        data: { label: "Hola", name: "Entidad", methods: ["get_species()"] },
+        data: {
+          label: "Hola",
+          name: "Entidad",
+          methods: ["get_species()"],
+          classType: "class",
+        },
       },
       {
         id: "2",
         type: "umlNode",
         position: { x: 10, y: 100 },
-        data: { label: "hola", name: name, methods: methods },
+        data: {
+          label: "hola",
+          name: name,
+          methods: methods,
+          classType: "class",
+        },
       },
     ],
     []
@@ -91,12 +102,16 @@ export default function BoxFlow({
     [setEdges]
   );
 
-  const createNewNode = (name: string, methods: string[]) => {
+  const createNewNode = (
+    name: string,
+    methods: string[],
+    classType: string
+  ) => {
     const newNode: NodesType = {
       id: n_id.toString(),
       type: "umlNode",
       position: { x: 50 * (n_id - 2), y: 50 },
-      data: { label: "hola", name: name, methods: methods },
+      data: { label: "hola", name: name, methods: methods, classType: classType },
     };
     setId((id) => id + 1);
     setNodes((nodes) => [...nodes, newNode]);
@@ -117,6 +132,7 @@ export default function BoxFlow({
       if (pane !== undefined) {
         setMenu({
           id: node.id,
+          type: node.className ? node.className : "class",
           top: event.clientY < pane.height - 200 && event.clientY,
           left: event.clientX < pane.width - 200 && event.clientX,
           right:
