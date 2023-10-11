@@ -132,7 +132,7 @@ export default function BoxFlow({
       if (pane !== undefined) {
         setMenu({
           id: node.id,
-          type: node.className ? node.className : "class",
+          type: node.data.classType ? node.data.classType : "class",
           top: event.clientY < pane.height - 200 && event.clientY,
           left: event.clientX < pane.width - 200 && event.clientX,
           right:

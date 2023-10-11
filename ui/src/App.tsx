@@ -27,10 +27,10 @@ export default function App() {
     let data = nodesList.map((node) => {
       return {
         className: node.data.name ? node.data.name : "hola",
+        classType: node.data.classType,
         methods: node.data.methods,
       };
     });
-    console.log(data);
     axios.post(baseURL, data).then((response) => {
       const res: string = response.data;
       setStringPost(res);

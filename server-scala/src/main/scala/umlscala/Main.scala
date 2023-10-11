@@ -46,7 +46,11 @@ object Main extends cask.MainRoutes {
   def iterateArrayJson(arrayCursor: ACursor, partialUmlClasses: List[UMLClass]): List[UMLClass] = {
     if (arrayCursor.failed) partialUmlClasses
     else {
-      val objectUml = new UMLClass(arrayCursor.get[String]("className").getOrElse(""), arrayCursor.get[List[String]]("methods").getOrElse(Nil))
+      val objectUml = new UMLClass(
+        arrayCursor.get[String]("className").getOrElse(""),
+        arrayCursor.get[List[String]]("methods").getOrElse(Nil),
+        arrayCursor.get[String]("classType").getOrElse("")
+      )
       iterateArrayJson(arrayCursor.right, objectUml :: partialUmlClasses)
     }
 
@@ -63,7 +67,8 @@ object Main extends cask.MainRoutes {
     val jsonData = parseJson(data)
     //This cursor make possible to loop through a Json object
     val umlClasses = convertJsonToObject(jsonData)
-    cask.Response(umlClasses.head.makeClass(), headers = headers)
+    val listClasses: List[String] = umlClasses.map(clase => clase.makeClass())
+    cask.Response(listClasses.mkString("\n\n"), headers = headers)
   }
 
   @cask.route("/uml", methods = Seq("options"))
