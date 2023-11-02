@@ -15,7 +15,8 @@ function NodeUml({ data }: NodeProps<NodeUmlProps>) {
         <div className="border-solid rounded-none border-b border-gray-500 p-1 text-center">
           {data.classType === "trait" ? (
             <div className="text-center">
-            <span>{"<<trait>>"}</span><br></br> {className}
+              <span>{"<<trait>>"}</span>
+              <br></br> {className}
             </div>
           ) : data.classType === "abstractClass" ? (
             <span className="italic">{className}</span>

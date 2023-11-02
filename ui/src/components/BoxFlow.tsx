@@ -111,7 +111,12 @@ export default function BoxFlow({
       id: n_id.toString(),
       type: "umlNode",
       position: { x: 50 * (n_id - 2), y: 50 },
-      data: { label: "hola", name: name, methods: methods, classType: classType },
+      data: {
+        label: "hola",
+        name: name,
+        methods: methods,
+        classType: classType,
+      },
     };
     setId((id) => id + 1);
     setNodes((nodes) => [...nodes, newNode]);

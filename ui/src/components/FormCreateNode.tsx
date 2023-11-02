@@ -21,12 +21,11 @@ const typeOptions = ["class", "abstractClass", "trait"];
 const typeNames = ["Clase", "Clase abstracta", "Trait"];
 
 export default function FormCreateNode(props: FormCreateNodeProps) {
-  const [tipo, setTipo] = useState("class"); 
+  const [tipo, setTipo] = useState("class");
   const [isOpen, setIsOpen] = useState(false);
   const { control, register, handleSubmit, reset } = useForm<UseFormInputs>({
     defaultValues: { name: "", inputs: [{ name: "test" }] },
   });
- 
 
   const { fields, append /* prepend, remove, swap, move, insert */ } =
     useFieldArray({
@@ -39,7 +38,8 @@ export default function FormCreateNode(props: FormCreateNodeProps) {
       data.name,
       data.inputs.map((input: any) => input.name),
       tipo
-    );}
+    );
+  };
 
   const submitHandler = (name: string, methods: string[], type: string) => {
     props.createFunction(name, methods, type);
@@ -73,10 +73,12 @@ export default function FormCreateNode(props: FormCreateNodeProps) {
               Crear nueva clase
             </Dialog.Title>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <RadioGroup value = {tipo} onChange={setTipo}>
-                <RadioGroup.Label className="font-semibold">Tipo de Clase</RadioGroup.Label>
+              <RadioGroup value={tipo} onChange={setTipo}>
+                <RadioGroup.Label className="font-semibold">
+                  Tipo de Clase
+                </RadioGroup.Label>
                 {typeOptions.map((option, index) => (
-                  <RadioGroup.Option key={option} value={option} >
+                  <RadioGroup.Option key={option} value={option}>
                     {({ checked }) => (
                       <div
                         className={`${

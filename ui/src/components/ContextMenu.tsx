@@ -37,7 +37,8 @@ export default function ContextMenu({
       {...props}
     >
       <p style={{ margin: "0.5em" }} className="text-xl">
-        <small>node: {id}</small><br></br>
+        <small>node: {id}</small>
+        <br></br>
         <small>tipo: {type}</small>
       </p>
       <button

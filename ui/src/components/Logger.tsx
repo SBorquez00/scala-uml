@@ -5,14 +5,12 @@ export default function Logger() {
   const { getEdges } = useReactFlow();
   const clickHandler = () => {
     const edges = getEdges();
-    const nodes = edges.map(
-      (edge) => {
-        return {
-          source: edge.source,
-          target: edge.target
-        }
-      }
-    );
+    const nodes = edges.map((edge) => {
+      return {
+        source: edge.source,
+        target: edge.target,
+      };
+    });
     console.log(nodes);
   };
   return (
