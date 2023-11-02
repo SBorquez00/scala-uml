@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { Dialog, RadioGroup } from "@headlessui/react";
-import { set, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 
 interface FormCreateNodeProps {
   createFunction: any;

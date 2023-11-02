@@ -2,7 +2,7 @@ import { Panel, useReactFlow } from "reactflow";
 import Button from "./Button";
 
 export default function Logger() {
-  const { getEdges, getNode } = useReactFlow();
+  const { getEdges } = useReactFlow();
   const clickHandler = () => {
     const edges = getEdges();
     const nodes = edges.map(
