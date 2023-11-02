@@ -3,6 +3,7 @@ import axios from "axios";
 import BoxFlow, { NodesType } from "./components/BoxFlow";
 import FormCreateNode from "./components/FormCreateNode";
 import Button from "./components/Button";
+import { useReactFlow } from "reactflow";
 
 const className = "Persona";
 const methods = [
@@ -18,6 +19,7 @@ export default function App() {
   const baseURL = "http://localhost:8080/uml";
   const [createNewNode, setCreateNewNode] = useState<Function>(() => () => {});
   const [nodesList, setNodesList] = useState<NodesType[]>([]);
+  const { getEdges, getNode } = useReactFlow()
 
   const createPost = () => {
     if (nodesList.length === 0) {
@@ -26,12 +28,38 @@ export default function App() {
     }
     let data = nodesList.map((node) => {
       return {
+        id: node.id,
         className: node.data.name ? node.data.name : "hola",
         classType: node.data.classType,
         methods: node.data.methods,
+        target: "-1"
       };
     });
-    axios.post(baseURL, data).then((response) => {
+    const data2: {
+      [key: string]: { [k: string]: string | string[] | undefined };
+    } = data.reduce(
+      (
+        acc: { [key: string]: { [k: string]: string | string[] | undefined } },
+        node
+      ) => {
+        const { id, ...newNode } = node;
+        acc[id] = newNode;
+        return acc;
+      },
+      {}
+    );
+    const edges = getEdges().map((edge) => {
+      return {
+        source: edge.source,
+        target: edge.target,
+      };
+    });
+
+    edges.forEach((edge) => {
+      data2[edge.source].target = getNode(edge.target)?.data.name;
+    })
+    const data3 = Object.values(data2);
+    axios.post(baseURL, data3).then((response) => {
       const res: string = response.data;
       setStringPost(res);
       console.log(stringPost);

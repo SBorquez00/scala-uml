@@ -1,6 +1,6 @@
 package umlscala
 
-class UMLClass(val name: String, val methods: List[String], val classType: String) {
+class UMLClass(val name: String, val methods: List[String], val classType: String, val classTarget: String) {
 
   def print(): Unit = {
     println(s"Nombre: ${name} \n Metodos:${methods.mkString("\n")}")
@@ -8,7 +8,11 @@ class UMLClass(val name: String, val methods: List[String], val classType: Strin
 
   def makeClass(): String = {
     val header: String = if (classType=="class") {
-      s"class ${name}() {"
+      if(classTarget=="-1"){
+        s"class ${name}() {"
+      } else{
+        s"class ${name}() extends ${classTarget} {"
+      }
     } else if (classType=="trait"){
       s"trait ${name} {"
     } else{

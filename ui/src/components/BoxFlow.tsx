@@ -16,6 +16,7 @@ import "reactflow/dist/style.css";
 import { Edge, Connection } from "@reactflow/core";
 import NodeUml from "./node_uml";
 import ContextMenu from "./ContextMenu";
+import Logger from "./Logger";
 
 interface BoxFlowProps {
   name: string;

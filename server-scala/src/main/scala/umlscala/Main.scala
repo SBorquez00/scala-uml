@@ -49,7 +49,8 @@ object Main extends cask.MainRoutes {
       val objectUml = new UMLClass(
         arrayCursor.get[String]("className").getOrElse(""),
         arrayCursor.get[List[String]]("methods").getOrElse(Nil),
-        arrayCursor.get[String]("classType").getOrElse("")
+        arrayCursor.get[String]("classType").getOrElse(""),
+        arrayCursor.get[String]("target").getOrElse("-2")
       )
       iterateArrayJson(arrayCursor.right, objectUml :: partialUmlClasses)
     }

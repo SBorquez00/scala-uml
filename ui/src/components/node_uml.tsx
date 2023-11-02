@@ -1,4 +1,4 @@
-import { Handle, Position, Node, NodeProps } from "reactflow";
+import { Handle, Position, NodeProps } from "reactflow";
 
 interface NodeUmlProps {
   name: String;
