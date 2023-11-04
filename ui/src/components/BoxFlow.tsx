@@ -8,7 +8,6 @@ import ReactFlow, {
   MiniMap,
   Controls,
   DefaultEdgeOptions,
-  MarkerType,
   NodeMouseHandler,
   Node,
 } from "reactflow";
@@ -16,6 +15,7 @@ import "reactflow/dist/style.css";
 import { Edge, Connection } from "@reactflow/core";
 import NodeUml from "./node_uml";
 import ContextMenu from "./ContextMenu";
+import ImplementEdge from "./ImplementEdge";
 
 interface BoxFlowProps {
   name: string;
@@ -41,15 +41,15 @@ interface MenuProps {
 }
 
 const initialEdges = [
-  { id: "e1-2", source: "2", target: "1", type: "smoothstep" },
+  { id: "e1-2", source: "2", target: "1", type: "implementedge" },
 ];
+
+const edgeTypes = {
+  implementedge: ImplementEdge,
+};
+
 const defaultEdgeOptions: DefaultEdgeOptions = {
-  style: { strokeWidth: 1, stroke: "#000000" },
-  markerEnd: {
-    type: MarkerType.Arrow,
-    color: "#000000",
-  },
-  type: "smoothstep",
+  type: "implementedge",
 };
 
 const nodeTypes = { umlNode: NodeUml };
@@ -165,6 +165,7 @@ export default function BoxFlow({
         ref={ref}
         nodes={nodes}
         edges={edges}
+        edgeTypes={edgeTypes}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
