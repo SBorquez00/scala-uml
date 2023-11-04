@@ -10,6 +10,7 @@ import ReactFlow, {
   DefaultEdgeOptions,
   NodeMouseHandler,
   Node,
+  updateEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { Edge, Connection } from "@reactflow/core";
@@ -96,6 +97,7 @@ export default function BoxFlow({
   const [n_id, setId] = useState(3);
   const [menu, setMenu] = useState<MenuProps | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const edgeUpdateSuccessful = useRef(true);
 
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -151,6 +153,23 @@ export default function BoxFlow({
   );
   const onPaneClick = useCallback(() => setMenu(null), [setMenu]);
 
+  const onEdgeUpdateStart = useCallback(() => {
+    edgeUpdateSuccessful.current = false;
+  }, []);
+
+  const onEdgeUpdate = useCallback((oldEdge: Edge, newConnection: Connection) => {
+    edgeUpdateSuccessful.current = true;
+    setEdges((els) => updateEdge(oldEdge, newConnection, els));
+  }, []);
+
+  const onEdgeUpdateEnd = useCallback((_: any, edge: Edge) => {
+    if (!edgeUpdateSuccessful.current) {
+      setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+    }
+
+    edgeUpdateSuccessful.current = true;
+  }, []);
+
   useEffect(() => {
     setter(createNewNode);
   }, [nodes]);
@@ -169,6 +188,9 @@ export default function BoxFlow({
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onEdgeUpdateStart={onEdgeUpdateStart}
+        onEdgeUpdate={onEdgeUpdate}
+        onEdgeUpdateEnd={onEdgeUpdateEnd}
         onConnect={onConnect}
         onPaneClick={onPaneClick}
         onNodeContextMenu={onNodeContextMenu}
